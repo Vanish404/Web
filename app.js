@@ -1,30 +1,24 @@
-var http = require('http');
 var express = require('express');
-//var util = require('util');
-var config = require('./config');
-var log = require('./libs/log')(module);
-var app = express();//функция для обработки запроса
+var config = require("./config");
+var path = require('path');
+var parser = require('./parser');
+
+var app = express();
 
 app.set('views', __dirname + '/template');
 app.set('view engine', 'ejs');
 
-app.get('/', function(req, res, next) {
-    res.render("index", {
-        body: '<b>Привет</b>'
-    });
+app.get('/', function (req, res) {
+
+    res.render(("index"), {body: parser});
+    //console.log(parser);
 });
 
-
-app.use(function(err, req, res, next) {
-    // NODE_ENV = 'production'
-    if (app.get('env') == 'development') {
-        var errorHandler = express.errorHandler();
-        errorHandler(err, req, res, next);
-    } else {
-        res.send(500);
-    }
+app.use(function(req, res, error) {
+    res.status(404).render(("error"),{body: '<b>Извините. Произошла ошибка.</b>'});
+    console.log('Попытка получить доступ к :'+ req.url);
 });
 
-http.createServer(app).listen(config.get('port'), function(){
-    log.info('Сервер слушает на порте: ' + config.get('port'));
+app.listen(config.get('port'), function () {
+    console.log('Слушает на порту: '+ config.get('port'));
 });
