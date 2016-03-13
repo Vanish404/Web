@@ -4,7 +4,7 @@ var cheerio = require("cheerio");
 
 var myData = [];
 var url = "http://gamebomb.ru";
-var pool = new http.Agent({request:url});
+var pool = new http.Agent({keepAlive:true});
 
 function getData (callback) {
     request({url: url, agent:pool}, function (error, response, body) {
