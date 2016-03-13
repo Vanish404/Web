@@ -1,26 +1,39 @@
 var request = require("request");
+var http = require('http');
 var cheerio = require("cheerio");
 
 var myData = [];
 var url = "http://gamebomb.ru";
+var pool = new http.Agent({request:url});
 
-request(url, function (error, response, body) {
-    var $ = cheerio.load(body);
-    if (!error) {
-        $(".sub:not(.gray)").each(function () {
-            var link = $(this);
-            var text = link.next().text();
-            var href = $(this).next().attr("href");
+function getData (callback) {
+    request({url: url, agent:pool}, function (error, response, body) {
+        if (error) {
+            return callback(error, null);
+        }
+        else {
+            var $ = cheerio.load(body);
+            $(".sub:not(.gray)").each(function () {
+                var link = $(this);
+                var text = link.next().text();
+                var href = $(this).next().attr("href");
 
-            myData.push({
-                link: href,
-                title: text
+                myData.push({
+                    link: href,
+                    title: text
+                });
             });
-        });
-    }
-});
+            return callback(null, myData);
+        }
+    });
+}
 
-module.exports = myData;
+module.exports.getData = getData;
+
+
+
+
+
 
 
 
