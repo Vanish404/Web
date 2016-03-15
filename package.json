@@ -11,6 +11,6 @@
     "nconf":"0.8.4",
     "winston":"2.2.0",
     "request":"2.69.0",
-    "cheerio":"0.20.0",
+    "cheerio":"0.20.0"
   }
 }
