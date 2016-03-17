@@ -1,5 +1,7 @@
-var parser = require('./parser');
+var express = require('express');
+var parser = require('../parser');
 
+var router = express.Router();
 var massJson = "data lost";
 
 parser.getData(function (err, result) {
@@ -14,7 +16,7 @@ parser.getData(function (err, result) {
 });
 
 setInterval(function() {
-   parser.getData(function (err, result) {
+    parser.getData(function (err, result) {
         if (err) {
             console.log(err.message);
         }
@@ -25,10 +27,8 @@ setInterval(function() {
     })
 }, 180000);
 
-function loadHomePage(req, res) {
-    res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
-    res.write(JSON.stringify(massJson));
-    res.end();
-}
+router.get('/', function(req, res) {
+    res.render(("index"), {body: massJson});
+});
 
-exports.loadHomePage = loadHomePage;
+module.exports = router;
