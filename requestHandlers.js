@@ -7,7 +7,6 @@ parser.getData(function (err, result) {
         console.log(err.message);
     }
     else {
-
         massJson = result;
         console.log('Cache is built');
     }

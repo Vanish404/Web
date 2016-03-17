@@ -6,7 +6,7 @@ function start(route, handle) {
         res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
         route(handle, req, res);
     }
-    http.createServer(onRequest).listen(8888);
+    http.createServer(onRequest).listen(config.get('port'));
     console.log("Server has started.");
 }
 
