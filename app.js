@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 app.use('/', routes);
 
 app.use(function(req, res, error) {
-    res.status(404).render(("error"),{body: '<b>Извините. Произошла ошибка.</b>'});
+    res.status(404).render("error",{body: '<b>Извините. Произошла ошибка.</b>'});
     console.log('Попытка получить доступ к :'+ req.url);
 });
 
