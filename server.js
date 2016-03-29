@@ -1,6 +1,8 @@
 var app = require('./app');
+var http = require('http');
 var config = require("./config");
 
-app.listen(config.get('port'), function () {
-    console.log('Слушает на порту: '+ config.get('port'));
-});
+var server = http.createServer(app);
+
+server.listen(config.get('port'));
+
