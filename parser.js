@@ -1,31 +1,28 @@
-var request = require("request");
+var request = require('request');
 var http = require('http');
-var cheerio = require("cheerio");
+var cheerio = require('cheerio');
 
 var headers = {
     'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'text/plain',
-    'Connection': 'keep-alive'
+    'Content-Type':     'text/plain'
 };
 
-// Configure the request
 var options = {
     url: 'http://gamebomb.ru',
     method: 'GET',
     headers: headers
 };
-var getData = function(callback) {
+var getData = function (callback) {
     request(options, function (error, response, body) {
         if (error) {
             callback(error, null);
-        }
-        else {
+        } else {
             var myData = [];
             var $ = cheerio.load(body);
-            $(".sub:not(.gray)").each(function () {
+            $('.sub:not(.gray)').each(function () {
                 var link = $(this);
                 var text = link.next().text();
-                var href = $(this).next().attr("href");
+                var href = $(this).next().attr('href');
 
                 myData.push({
                     link: href,
@@ -56,7 +53,6 @@ var getDataFromPage = function(callback) {
 
         });
     });
-
 };*/
 module.exports.getData = getData;
 
