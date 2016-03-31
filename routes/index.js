@@ -4,6 +4,7 @@ var parser = require('../parser');
 var router = express.Router();
 var massJson = [];
 
+// убрать состояние
 parser.getData(function (err, result) {
     if (err) {
         console.log(err.stack);

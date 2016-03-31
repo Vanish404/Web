@@ -1,9 +1,10 @@
 {
-  "name": "application-name",
+  "name": "WebScrapper",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "jscs-fix": "jscs --fix app.js parser.js server.js config/index.js routes/index.js"
   },
   "dependencies": {
     "express": "4.13.4",

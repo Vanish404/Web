@@ -12,6 +12,7 @@ var options = {
     method: 'GET',
     headers: headers
 };
+
 var getData = function (callback) {
     request(options, function (error, response, body) {
         if (error) {
@@ -55,15 +56,3 @@ var getDataFromPage = function(callback) {
     });
 };*/
 module.exports.getData = getData;
-
-
-
-
-
-
-
-
-
-
-
-

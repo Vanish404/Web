@@ -1,7 +1,3 @@
 {
-  "preset": "yandex",
-  "requireMultipleVarDecl": false,
-  "validateLineBreaks": false,
-  "requireLineFeedAtFileEnd": false,
-  "disallowMultipleLineBreaks": false
+  "preset": "yandex"
 }
