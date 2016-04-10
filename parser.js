@@ -8,17 +8,18 @@ var headers = {
 };
 
 var options = {
-    url: 'http://gamebomb.ru',
+    url: 'http://gamebomb.ru/news',
     method: 'GET',
     headers: headers
 };
 
+var myData = [];
 var getData = function (callback) {
     request(options, function (error, response, body) {
         if (error) {
             callback(error, null);
         } else {
-            var myData = [];
+            myData = [];
             var $ = cheerio.load(body);
             $('.sub:not(.gray)').each(function () {
                 var link = $(this);
@@ -30,29 +31,37 @@ var getData = function (callback) {
                     title: text
                 });
             });
-
             callback(null, myData);
         }
     });
 };
-/* По всем страницам
-var getDataFromPage = function(callback) {
-    var nextPage = myData.pop();
-    var pageData =[];
-    request(nextPage, function(err,response,body) {
-        var $ = cheerio.load(body);
-        $(".container-margin p").each(function () {
+var pageData = [];
+getData(function (err, rez) {
+    var url = [];
+    for (url in rez) {
+        /*if (err) {
+            console.log(err.stack);
+        }
+        console.log(rez);*/
 
-            var link = $(this);
-            var text = link.text().replace(/^\s+|\s+$/g, '');
+        request(rez[url].link, function (err, response, body) {
+            console.log(rez[url].link);
+            var $ = cheerio.load(body);
+            $('.container-margin p').each(function () {
 
-            if(text !== '') {
-                pageData.push({
-                    text: text
-                });
-            }
+                var link = $(this);
+                var text = link.text().replace(/^\s+|\s+$/g, '');
 
+                if (text !== '') {
+                    console.log(text);
+
+                    pageData.push({
+                        text: text
+                    });
+                }
+            });
         });
-    });
-};*/
+
+    }
+});
 module.exports.getData = getData;
