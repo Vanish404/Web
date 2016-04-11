@@ -37,16 +37,50 @@ var getData = function (callback) {
 };
 var pageData = [];
 getData(function (err, rez) {
+    getUrl();
+});
+function getUrl() {
+    if (myData.length === 0) {
+        return;
+    }
+    console.log(myData.length);
+    var next = myData.shift().link;
+    makeRequest(next, getUrl);
+}
+function makeRequest(url, callback) {
+    request(url, function (err, response, body) {
+        console.log(url);
+        var $ = cheerio.load(body);
+        $('.container-margin p').each(function () {
+
+            var link = $(this);
+            var text = link.text().replace(/^\s+|\s+$/g, '');
+
+            if (text !== '') {
+                console.log(text);
+
+                pageData.push({
+                    text: text
+                });
+
+            }
+
+        });
+        callback();
+    });
+}
+/*var pageData = [];
+getData(function (err, rez) {
     var url = [];
     for (url in rez) {
-        /*if (err) {
+        /!*if (err) {
             console.log(err.stack);
         }
-        console.log(rez);*/
+        console.log(rez);*!/
 
         request(rez[url].link, function (err, response, body) {
-            console.log(rez[url].link);
             var $ = cheerio.load(body);
+            console.log(rez[url].link);
             $('.container-margin p').each(function () {
 
                 var link = $(this);
@@ -55,13 +89,12 @@ getData(function (err, rez) {
                 if (text !== '') {
                     console.log(text);
 
-                    pageData.push({
-                        text: text
-                    });
+                    pageData[url] = text;
+
                 }
             });
         });
 
     }
-});
+});*/
 module.exports.getData = getData;
