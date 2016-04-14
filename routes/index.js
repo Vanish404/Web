@@ -1,35 +1,15 @@
 var express = require('express');
 var path = require('path');
 var parser = require('../parser');
-/*var cp = require('child_process');
-var worker = cp.fork('parser.js');*/
 var router = express.Router();
-var massJson = [];
-/*/!*worker.on('message', function(msg) {
- console.log(msg);*!/
- });*/
-// убрать состояние
-/*parser.getData(function (err, result) {
-    if (err) {
-        console.log(err.stack);
-    } else {
-        massJson = result;
-        console.log('Cache is built');
-        console.log(process.memoryUsage());
-    }
+var fork = require('child_process').fork;
+var cp = fork('./parser');
+cp.on('message', function (msgobj) {
+    console.log('Parent: ', msgobj.text);
 });
-
-setInterval(function () {
-    parser.getData(function (err, result) {
-        if (err) {
-            console.log(err.message);
-        } else {
-            massJson = result;
-            console.log('Cache is built');
-            console.log(process.memoryUsage());
-        }
-    });
-}, 180000);*/
+cp.send({
+    text: "I send msg"
+});
 
 router.get('/', function (req, res) {
     parser.getData(function (err, result) {
@@ -44,18 +24,6 @@ router.get('/', function (req, res) {
         console.log(req.method);
         console.log(req.headers);
     });
-    /*res.render('index', {body: massJson});*/
 });
-/*
-app.use(function(req, res, next) {
-    if(massJson.length === 0)
-    {
-        var err = new Error('No content');
-        err.status = 204;
-        next(err);
-    }
-
-});
-*/
 
 module.exports = router;

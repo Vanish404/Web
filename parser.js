@@ -35,66 +35,50 @@ var getData = function (callback) {
         }
     });
 };
+
 var pageData = [];
 getData(function (err, rez) {
+    if (err) {
+        console.log(err.message);
+        return;
+    }
     getUrl();
 });
+
 function getUrl() {
     if (myData.length === 0) {
         return;
     }
-    console.log(myData.length);
-    var next = myData.shift().link;
-    makeRequest(next, getUrl);
+    console.log('Запрос: ' + myData.length);
+    var next = myData.shift();
+    pageData.push({link: next.link,
+    title: next.title});
+    makeRequest(next.link, getUrl);
 }
+
 function makeRequest(url, callback) {
     request(url, function (err, response, body) {
         console.log(url);
+        var textString = '';
         var $ = cheerio.load(body);
         $('.container-margin p').each(function () {
-
             var link = $(this);
             var text = link.text().replace(/^\s+|\s+$/g, '');
-
             if (text !== '') {
                 console.log(text);
-
-                pageData.push({
-                    text: text
-                });
-
+                textString += text;
             }
-
+        });
+        pageData.push({
+            text: textString
         });
         callback();
     });
 }
-/*var pageData = [];
-getData(function (err, rez) {
-    var url = [];
-    for (url in rez) {
-        /!*if (err) {
-            console.log(err.stack);
-        }
-        console.log(rez);*!/
-
-        request(rez[url].link, function (err, response, body) {
-            var $ = cheerio.load(body);
-            console.log(rez[url].link);
-            $('.container-margin p').each(function () {
-
-                var link = $(this);
-                var text = link.text().replace(/^\s+|\s+$/g, '');
-
-                if (text !== '') {
-                    console.log(text);
-
-                    pageData[url] = text;
-
-                }
-            });
-        });
-
-    }
-});*/
+process.on('message', function (msgobj) {
+    console.log('Child got message:', msgobj.text);
+    process.send({
+        text: msgobj.text + ' too'
+    });
+});
 module.exports.getData = getData;
