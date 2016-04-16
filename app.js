@@ -10,7 +10,19 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/', routes);
-
+setInterval(function () {
+    var fork = require('child_process').fork;
+    var cp = fork('./parser');
+    var myDat = [];
+    cp.on('message', function (msgobj) {
+        myDat = msgobj;
+        console.log(myDat);
+        // TODO
+    });
+    cp.send({
+        text: 'I send msg'
+    });
+}, 180000);
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
