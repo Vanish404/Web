@@ -42,6 +42,7 @@ process.on('message', function (msgobj) {
     getData(function (err, rez) {
         if (err) {
             console.log(err.message);
+            process.exit(0);
             return;
         }
         getUrl();
