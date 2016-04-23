@@ -56,15 +56,12 @@ process.on('message', function (msgobj) {
         }
         console.log('Запрос: ' + myData.length);
         var next = myData.shift();
-        pageData.push({
-            link: next.link,
-            title: next.title
-        });
-        makeRequest(next.link, getUrl);
+
+        makeRequest(next, getUrl);
     }
 
     function makeRequest(url, callback) {
-        request(url, function (err, response, body) {
+        request(url.link, function (err, response, body) {
             if (err) {
                 callback();
             }
@@ -80,8 +77,11 @@ process.on('message', function (msgobj) {
                 }
             });
             pageData.push({
+                link: url.link,
+                title: url.title,
                 text: textString
             });
+
             callback();
         });
     }
