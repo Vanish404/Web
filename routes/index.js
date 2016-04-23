@@ -2,8 +2,9 @@ var express = require('express');
 var path = require('path');
 var parser = require('../parser');
 var router = express.Router();
+var Page = require('../models/page').Page;
 
-router.get('/', function (req, res) {
+/*router.get('/', function (req, res) {
     parser.getData(function (err, result) {
         if (err) {
             err.status = 404;
@@ -16,6 +17,23 @@ router.get('/', function (req, res) {
         console.log(req.method);
         console.log(req.headers);
     });
-});
+});*/
+router.get('/news', function(req, res, next) {
+    Page.find({}, function(err, users) {
+        if (err) return next(err);
 
+        res.json(users);
+    })
+});
+router.get('/news/:id', function (req, res, next) { // {} -пустые объекты условий
+    Page.findById(req.params.id, function (err, page) {
+        if (err) {
+            err.status = 404;
+            return next(err);
+        }
+        console.log(page._id);        /* res.render('content', {title: page._id, content: page.text});*/
+        res.render('content', {title: page.title, content: page.text});
+    });
+
+});
 module.exports = router;

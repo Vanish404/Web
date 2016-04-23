@@ -2,7 +2,6 @@ var express = require('express');
 var routes = require('./routes/index');
 var path = require('path');
 var favicon = require('serve-favicon');
-
 var app = express();
 
 app.set('views', __dirname + '/template');
@@ -17,7 +16,8 @@ setInterval(function () {
     cp.on('message', function (msgobj) {
         myDat = msgobj;
         console.log(msgobj);
-        require('./CreateDB');
+        /*require('./CreateDB');*/
+        getUpdate();
     });
     cp.send({
         text: 'I send msg'
@@ -25,6 +25,9 @@ setInterval(function () {
 }, 120000);
 function getPages (callback) {
     callback(myDat);
+}
+function getUpdate() {
+    require('./CreateDB');
 }
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
