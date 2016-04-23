@@ -12,7 +12,9 @@
     "nconf": "0.8.4",
     "request": "2.69.0",
     "cheerio": "0.20.0",
-    "serve-favicon": "2.3.0"
+    "serve-favicon": "2.3.0",
+    "mongoose": "4.4.12",
+    "async": "1.5.2"
   },
   "devDependencies": {
     "jscs": "^2.11.0",

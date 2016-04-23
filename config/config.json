@@ -1,3 +1,6 @@
 {
-  "port": 7788
+  "port": 7788,
+  "mongoose": {
+    "uri": "mongodb://vadim.demyanchik:8895428aa@ds013260.mlab.com:13260/vadim"
+  }
 }
