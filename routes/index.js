@@ -1,6 +1,4 @@
 var express = require('express');
-var path = require('path');
-var parser = require('../parser');
 var router = express.Router();
 var Page = require('../models/page').Page;
 
@@ -19,10 +17,10 @@ var Page = require('../models/page').Page;
     });
 });*/
 router.get('/news', function(req, res, next) {
-    Page.find({}, function(err, users) {
+    Page.find({}, function(err, pages) {
         if (err) return next(err);
-
-        res.json(users);
+        res.render('index', {content: pages});
+        console.log(pages);
     })
 });
 router.get('/news/:id', function (req, res, next) { // {} -пустые объекты условий

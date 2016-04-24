@@ -6,6 +6,8 @@ var app = express();
 
 app.set('views', __dirname + '/template');
 app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname, 'public')));
 var myDat = [];
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/', routes);
