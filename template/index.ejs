@@ -56,9 +56,9 @@
 
     <div class="masthead">
         <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li class="active"><a href="/news/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
         <h3 class="muted">Web Scraper</h3>
     </div>
@@ -68,7 +68,7 @@
     <div class="jumbotron">
 
         <% content.forEach(function (elem){ %>
-        <a href="<%- elem._id %>"><div><p class="lead"><%- elem.title %></div></a>
+        <a href="/news/<%- elem._id %>"><div><p class="lead"><%- elem.title %></div></a>
         <hr><% }) %>
 
     </div>
