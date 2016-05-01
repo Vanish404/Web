@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "jscs-fix": "jscs --fix app.js parser.js server.js config/index.js routes/index.js"
+    "jscs-fix": "jscs --fix app.js parser.js server.js config/index.js routes/index.js test/test.js CreateDB.js models/page.js lib/mongoose.js"
   },
   "dependencies": {
     "express": "4.13.4",
