@@ -6,7 +6,7 @@ describe('homepage', function () {
     it('should return home page',
         function (done) {
             supertest(app)
-                .get('/')
+                .get('/news')
                 .expect(200)
                 .end(function (err, res) {
                     res.status.should.equal(200);
