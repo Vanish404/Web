@@ -1,27 +1,27 @@
 var express = require('express');
+var Page = require('../models/page');
 var router = express.Router();
-var Page = require('../models/page').Page;
 
-/*router.get('/', function (req, res) {
-    parser.getData(function (err, result) {
+router.get('/news', function (req, res, next) {
+    Page.find({}, function (err, pages) {
         if (err) {
-            err.status = 404;
-            res.render('error', {body: '<b>Извините. При получении данных произошла ошибка.</b>',
-                error: err.status, message: err.message});
-        } else {
-            res.render('index', {body: result});
+            return next(err);
         }
-        res.end();
-        console.log(req.method);
-        console.log(req.headers);
-    });
-});*/
-router.get('/news', function(req, res, next) {
-    Page.find({}, function(err, pages) {
-        if (err) return next(err);
         res.render('index', {content: pages});
         console.log(pages);
-    })
+    });
+});
+router.get('/about', function (req, res, next) {
+
+    res.render('about', {title: 'About', content: 'Для реализации запроса и скачивания страниц с другого ресурса, ' +
+    'используем модули cheerio и request, и обернем все этот в дочерний процесс (child_process). ' +
+    'Каждые пару минут, с помощью функции setInterval, респавнит дочерний процесса.'});
+
+});
+router.get('/contact', function (req, res, next) {
+
+    res.render('contact', {title: 'Contact', content: 'Шуба Максим. shubamaxim95@gmail.com'});
+
 });
 router.get('/news/:id', function (req, res, next) { // {} -пустые объекты условий
     Page.findById(req.params.id, function (err, page) {
@@ -29,7 +29,7 @@ router.get('/news/:id', function (req, res, next) { // {} -пустые объе
             err.status = 404;
             return next(err);
         }
-        console.log(page._id);        /* res.render('content', {title: page._id, content: page.text});*/
+        console.log(page._id);
         res.render('content', {title: page.title, content: page.text});
     });
 

@@ -1,5 +1,4 @@
 var request = require('request');
-var http = require('http');
 var cheerio = require('cheerio');
 process.on('message', function (msgobj) {
     console.log('Child got message:', msgobj.text);
@@ -19,7 +18,7 @@ process.on('message', function (msgobj) {
     var getData = function (callback) {
         request(options, function (error, response, body) {
             if (error) {
-                callback(error, null);
+                return callback(error, null);
             } else {
                 myData = [];
                 var $ = cheerio.load(body);
@@ -33,7 +32,7 @@ process.on('message', function (msgobj) {
                         title: text
                     });
                 });
-                callback(null, myData);
+                return callback(null, myData);
             }
         });
     };
@@ -85,6 +84,6 @@ process.on('message', function (msgobj) {
             callback();
         });
     }
-    module.exports.getData = getData;
+
 });
 

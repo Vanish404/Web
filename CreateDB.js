@@ -2,19 +2,13 @@ var mongoose = require('./lib/mongoose');
 var async = require('async');
 
 async.series([
-    open,
     dropDatabase,
     requireModels,
     createPages
 ], function (err) {
     console.log(arguments);
-    mongoose.disconnect();
-});
 
-function open(callback) {
-    console.log('ПОДКЛЮЧЕНИЕ К БД --------------------------------------------------------');
-    mongoose.connection.on('open', callback);
-}
+});
 
 function dropDatabase(callback) {
     var db = mongoose.connection.db;

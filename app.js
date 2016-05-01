@@ -18,19 +18,17 @@ setInterval(function () {
     cp.on('message', function (msgobj) {
         myDat = msgobj;
         console.log(msgobj);
-        /*require('./CreateDB');*/
-        getUpdate();
+        require('./CreateDB');
+
     });
     cp.send({
         text: 'I send msg'
     });
 }, 120000);
-function getPages (callback) {
+function getPages(callback) {
     callback(myDat);
 }
-function getUpdate() {
-    require('./CreateDB');
-}
+
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
