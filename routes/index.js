@@ -21,7 +21,6 @@ router.get('/about', function (req, res, next) {
 router.get('/contact', function (req, res, next) {
 
     res.render('contact', {title: 'Contact', content: 'Шуба Максим. shubamaxim95@gmail.com'});
-
 });
 router.get('/news/:id', function (req, res, next) { // {} -пустые объекты условий
     Page.findById(req.params.id, function (err, page) {
